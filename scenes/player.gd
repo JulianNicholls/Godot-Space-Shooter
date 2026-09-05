@@ -23,9 +23,17 @@ func _process(_delta: float) -> void:
 	# Shoot input
 	if laserReady and Input.is_action_just_pressed('shoot'):
 		laserReady = false
-		$LaserTimer.start(0.2)
-		laser.emit($LaserStartPos.global_position)
-		$LaserSound.play()
+		%LaserTimer.start(0.2)
+		laser.emit(%LaserStartPos.global_position)
+		%LaserSound.play()
 		
-func play_collision_sound() -> void:
-	$CollisionSound.play()
+func leave() -> void:	
+	var tween := create_tween()
+	tween.tween_property(%PlayerShipImage, 'scale', Vector2(0, 0), 0.3)
+	%Explosion.visible = true
+	
+	%CollisionSound.play()
+	await %CollisionSound.finished
+	
+	%Explosion.visible = false
+	%PlayerShipImage.scale = Vector2(1.0, 1.0)

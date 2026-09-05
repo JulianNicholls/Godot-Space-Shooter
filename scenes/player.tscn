@@ -5,42 +5,60 @@
 [ext_resource type="AudioStream" uid="uid://c1ybdu778og11" path="res://assets/Bonus/sfx_laser2.ogg" id="3_qhqgy"]
 [ext_resource type="AudioStream" uid="uid://c5v4b0hndcg7e" path="res://assets/Bonus/Explosion.wav" id="4_dqkch"]
 
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_rgm4q"]
-particle_flag_disable_z = true
-emission_shape = 1
-emission_sphere_radius = 12.16
-gravity = Vector3(0, 200, 0)
-scale_max = 4.3399997
-scale_over_velocity_max = 30.099998
-color = Color(1, 0.13999999, 0.13999999, 1)
+[sub_resource type="Gradient" id="Gradient_dqkch"]
+colors = PackedColorArray(0, 0, 0, 1, 0.92, 0.86664003, 0.1196, 1)
 
 [node name="Player" type="CharacterBody2D" unique_id=1474618124]
 collision_mask = 6
 script = ExtResource("1_g2els")
 
-[node name="GPUParticles2D" type="GPUParticles2D" parent="." unique_id=728897211]
+[node name="GPUParticles2D" type="CPUParticles2D" parent="." unique_id=496115833]
 position = Vector2(1, 33)
 amount = 10
 lifetime = 0.38
-process_material = SubResource("ParticleProcessMaterial_rgm4q")
+emission_shape = 1
+emission_sphere_radius = 15.35
+scale_amount_max = 4.03
+color = Color(1, 0.01999998, 0.01999998, 1)
 
 [node name="PlayerShipImage" type="Sprite2D" parent="." unique_id=1738379516]
+unique_name_in_owner = true
 texture = ExtResource("1_3vyb7")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." unique_id=1439129789]
 polygon = PackedVector2Array(-7, -38, 9, -37, 13, -11, 36, 1, 47, -6, 47, 23, 37, 24, 14, 29, 6, 39, -7, 38, -14, 29, -41, 22, -45, 25, -48, -4, -37, 2, -12, -12)
 
 [node name="LaserStartPos" type="Marker2D" parent="." unique_id=1712984876]
+unique_name_in_owner = true
 position = Vector2(0, -43)
 
 [node name="LaserTimer" type="Timer" parent="." unique_id=1503034396]
+unique_name_in_owner = true
 wait_time = 0.079
 one_shot = true
 
 [node name="LaserSound" type="AudioStreamPlayer2D" parent="." unique_id=1394576943]
+unique_name_in_owner = true
 stream = ExtResource("3_qhqgy")
 
 [node name="CollisionSound" type="AudioStreamPlayer2D" parent="." unique_id=794309892]
+unique_name_in_owner = true
 stream = ExtResource("4_dqkch")
+
+[node name="Explosion" type="CPUParticles2D" parent="." unique_id=913993059]
+unique_name_in_owner = true
+visible = false
+amount = 27
+emission_shape = 1
+emission_sphere_radius = 57.62
+spread = 80.45
+gravity = Vector2(0, 0)
+initial_velocity_min = 200.0
+initial_velocity_max = 400.0
+angular_velocity_min = 200.0
+angular_velocity_max = 400.0
+scale_amount_max = 19.18
+color = Color(1, 0.04000002, 0.04000002, 1)
+color_ramp = SubResource("Gradient_dqkch")
 
 [connection signal="timeout" from="LaserTimer" to="." method="_on_laser_timer_ready"]

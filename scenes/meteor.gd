@@ -37,11 +37,16 @@ func _on_body_entered(_body: Node2D) -> void:
 func _on_laser_entered(area: Area2D) -> void:
 	area.queue_free()	# Destroy current laser
 
-	# We need to wait for the explosion to play for a bit before we delete ourzselves
+	# We need to wait for the explosion to play and the meteor to fade for a bit before we delete ourselves
+	
+	var tween := create_tween()
+	tween.tween_property($MeteorImage, 'scale', Vector2(0, 0), 0.6)
+	$Explosion.visible = true
+	
 	$DestroySound.play()
-	$MeteorImage.hide()	
 	can_collide = false
 	await get_tree().create_timer(0.75).timeout
+	$MeteorImage.hide()	
 	
 	Global.score += 5
 	queue_free()		# Destroy this meteor

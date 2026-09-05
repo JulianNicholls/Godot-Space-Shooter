@@ -39,7 +39,7 @@ func _on_meteor_timer_timeout() -> void:
 	meteor.connect('collision', _on_meteor_collision)
 	
 func _on_meteor_collision() -> void:
-	$Player.play_collision_sound()
+	await $Player.leave()
 	
 	health -= 1
 	get_tree().call_group('UI', 'set_health', health)
